@@ -1,0 +1,238 @@
+---
+import { profile } from "../data/content";
+import SocialIcon from "./SocialIcon.astro";
+
+const nav = [
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+  { id: "writing", label: "Writing" },
+  { id: "contact", label: "Contact" },
+];
+---
+
+<aside class="sidebar">
+  <div class="top">
+    <h1><a href="#top">{profile.name}</a></h1>
+    <h2>{profile.role}</h2>
+    <p class="tagline">{profile.tagline}</p>
+
+    <nav aria-label="In-page">
+      <ul>
+        {
+          nav.map((n) => (
+            <li>
+              <a class="nav-link" href={`#${n.id}`} data-nav={n.id}>
+                <span class="line" aria-hidden="true" />
+                <span class="txt">{n.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <div class="bottom">
+    <ul class="socials">
+      {
+        profile.social.map((s) => (
+          <li>
+            <a href={s.url} aria-label={s.label} title={s.label} target="_blank" rel="noopener">
+              <SocialIcon name={s.name} />
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href={profile.resumeUrl} class="cv mono" target="_blank" rel="noopener">CV</a>
+      </li>
+    </ul>
+    <button id="theme-toggle" class="toggle mono" type="button" aria-label="Toggle theme">
+      <span class="tdark">Dark</span><span class="tlight">Light</span>
+    </button>
+  </div>
+</aside>
+
+<script is:inline>
+  (() => {
+    const btn = document.getElementById("theme-toggle");
+    btn?.addEventListener("click", () => {
+      const next =
+        document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem("theme", next);
+    });
+  })();
+</script>
+
+<script>
+  // Active-section tracking for the in-page nav.
+  const links = new Map<string, Element>();
+  document.querySelectorAll<HTMLElement>(".nav-link").forEach((a) => {
+    const id = a.dataset.nav;
+    if (id) links.set(id, a);
+  });
+  const sections = Array.from(links.keys())
+    .map((id) => document.getElementById(id))
+    .filter(Boolean) as HTMLElement[];
+
+  if ("IntersectionObserver" in window && sections.length) {
+    let current = "";
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) current = e.target.id;
+        });
+        links.forEach((a, id) => a.classList.toggle("active", id === current));
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
+    );
+    sections.forEach((s) => io.observe(s));
+  }
+</script>
+
+<style>
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding-block: 3.5rem 2rem;
+  }
+  h1 {
+    font-size: 2.1rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--text-strong);
+  }
+  h2 {
+    margin-top: 0.5rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text-strong);
+  }
+  .tagline {
+    margin-top: 0.9rem;
+    color: var(--muted);
+    max-width: 20rem;
+  }
+
+  nav {
+    margin-top: 2.5rem;
+    display: none;
+  }
+  nav ul {
+    list-style: none;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.2rem 0;
+  }
+  .line {
+    width: 1.9rem;
+    height: 1px;
+    background: var(--faint);
+    transition:
+      width 0.2s ease,
+      background 0.2s ease;
+  }
+  .txt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--faint);
+    transition: color 0.2s ease;
+  }
+  .nav-link:hover .line,
+  .nav-link.active .line {
+    width: 3.5rem;
+    background: var(--text-strong);
+  }
+  .nav-link:hover .txt,
+  .nav-link.active .txt {
+    color: var(--text-strong);
+  }
+
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .socials {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+  }
+  .socials a {
+    color: var(--muted);
+    display: inline-flex;
+    transition:
+      color 0.15s ease,
+      transform 0.15s ease;
+  }
+  .socials a:hover {
+    color: var(--accent-text);
+    transform: translateY(-2px);
+  }
+  .cv {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+  }
+  .cv:hover {
+    color: var(--accent-text);
+    border-color: var(--accent-text);
+  }
+  .toggle {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+  .toggle:hover {
+    color: var(--accent-text);
+    border-color: var(--accent-text);
+  }
+  .tlight {
+    display: none;
+  }
+  :global(html[data-theme="dark"]) .tlight {
+    display: inline;
+  }
+  :global(html[data-theme="dark"]) .tdark {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 44%;
+      max-width: 26rem;
+      padding-block: 6rem;
+      justify-content: space-between;
+      gap: 0;
+    }
+    nav {
+      display: block;
+    }
+  }
+</style>

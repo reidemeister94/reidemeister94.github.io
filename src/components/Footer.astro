@@ -1,40 +1,30 @@
 ---
-import { profile } from "../data/content";
-const year = 2026;
 const repo = "https://github.com/reidemeister94/reidemeister94.github.io";
 ---
 
 <footer>
-  <div class="container">
-    <p class="mono">© {year} {profile.name}</p>
-    <p class="built mono">
-      Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
-      · <a href={repo} target="_blank" rel="noopener">Source</a>
-    </p>
-  </div>
+  <p>
+    Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
+    &amp; Geist, deployed on GitHub Pages. ·
+    <a href={repo} target="_blank" rel="noopener">Source</a>
+  </p>
 </footer>
 
 <style>
   footer {
-    border-top: 1px solid var(--border);
-    padding-block: 2.5rem;
-  }
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
+    padding-block: 3rem 4rem;
   }
   p {
-    font-size: 0.8rem;
-    color: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--faint);
+    line-height: 1.7;
   }
-  .built a {
-    color: var(--text-muted);
+  a {
+    color: var(--muted);
     transition: color 0.15s ease;
   }
-  .built a:hover {
-    color: var(--accent);
+  a:hover {
+    color: var(--accent-text);
   }
 </style>

@@ -29,9 +29,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#08080a" />
+    <meta name="theme-color" content="#0b1016" />
 
-    <!-- Open Graph / social -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -40,66 +39,58 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    <!-- Set theme before paint to avoid a flash of the wrong theme -->
     <script is:inline>
       (() => {
         const root = document.documentElement;
-        // Mark JS as available so scroll-reveal only hides content when it can
-        // actually be revealed — no-JS visitors see everything.
         root.classList.add("js");
         const stored = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
-        ).matches;
-        root.dataset.theme = stored ?? (prefersDark ? "dark" : "light");
+        const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        root.dataset.theme = stored ?? (dark ? "dark" : "dark"); // default dark
       })();
     </script>
   </head>
   <body>
-    <div class="grain" aria-hidden="true"></div>
+    <div class="spotlight" aria-hidden="true"></div>
     <slot />
 
     <style is:global>
       :root {
-        --max-width: 60rem;
-        --radius: 16px;
         --font-sans:
-          "Geist Variable", ui-sans-serif, system-ui, -apple-system,
-          "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
         --font-mono:
-          "Geist Mono Variable", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
-          Consolas, monospace;
-        --accent: #7b6cff;
-        --accent-2: #22d3ee;
-        --gradient: linear-gradient(120deg, #7b6cff 0%, #22d3ee 100%);
+          "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, Consolas,
+          monospace;
       }
 
       html[data-theme="dark"] {
-        --bg: #08080a;
-        --bg-elev: #101014;
-        --bg-card: #0e0e12;
-        --text: #ededf0;
-        --text-muted: #8b8b96;
-        --text-faint: #56565f;
-        --border: #1d1d24;
-        --border-strong: #2b2b35;
-        --accent-soft: rgba(123, 108, 255, 0.12);
-        --glow: rgba(123, 108, 255, 0.22);
-        --grain-opacity: 0.035;
+        --bg: #0b1016;
+        --bg-2: #0f161e;
+        --text: #aeb9c4;
+        --text-strong: #e6edf3;
+        --muted: #7d8b99;
+        --faint: #56646f;
+        --border: #1d2733;
+        --card-hover: rgba(120, 200, 180, 0.04);
+        --accent: #6fe7c7;
+        --accent-text: #6fe7c7;
+        --accent-soft: rgba(111, 231, 199, 0.1);
+        --spotlight: rgba(111, 231, 199, 0.06);
       }
 
       html[data-theme="light"] {
-        --bg: #fafafa;
-        --bg-elev: #ffffff;
-        --bg-card: #ffffff;
-        --text: #16161a;
-        --text-muted: #5b5b66;
-        --text-faint: #9a9aa4;
-        --border: #e7e7ec;
-        --border-strong: #d7d7de;
-        --accent-soft: rgba(123, 108, 255, 0.1);
-        --glow: rgba(123, 108, 255, 0.14);
-        --grain-opacity: 0.02;
+        --bg: #f6f7f7;
+        --bg-2: #ffffff;
+        --text: #41505c;
+        --text-strong: #0f1720;
+        --muted: #5d6873;
+        --faint: #8c97a1;
+        --border: #e3e7ea;
+        --card-hover: rgba(13, 148, 136, 0.04);
+        --accent: #0d9488;
+        --accent-text: #0a7d73;
+        --accent-soft: rgba(13, 148, 136, 0.08);
+        --spotlight: transparent;
       }
 
       * {
@@ -110,98 +101,127 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
 
       html {
         scroll-behavior: smooth;
-        scroll-padding-top: 5rem;
+        scroll-padding-top: 2rem;
         -webkit-text-size-adjust: 100%;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
       }
 
       body {
         background: var(--bg);
         color: var(--text);
         font-family: var(--font-sans);
-        font-size: 16px;
-        line-height: 1.65;
+        font-size: 1rem;
+        line-height: 1.6;
+        letter-spacing: -0.004em;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
-        overflow-x: hidden;
-        transition:
-          background 0.25s ease,
-          color 0.25s ease;
+        transition: background 0.3s ease, color 0.3s ease;
       }
 
       a {
         color: inherit;
         text-decoration: none;
       }
-
       ::selection {
         background: var(--accent);
-        color: #fff;
+        color: var(--bg);
       }
 
-      /* Subtle film grain for depth/craft */
-      .grain {
+      /* Cursor spotlight — the one tasteful flourish. Dark theme only. */
+      .spotlight {
         position: fixed;
         inset: 0;
-        z-index: 1;
+        z-index: 0;
         pointer-events: none;
-        opacity: var(--grain-opacity);
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      }
-
-      .container {
-        width: 100%;
-        max-width: var(--max-width);
-        margin-inline: auto;
-        padding-inline: 1.5rem;
-        position: relative;
-        z-index: 2;
-      }
-
-      section {
-        padding-block: 4.5rem;
-        border-top: 1px solid var(--border);
-        position: relative;
-        z-index: 2;
+        background: radial-gradient(
+          600px at var(--mx, 50%) var(--my, 0%),
+          var(--spotlight),
+          transparent 80%
+        );
+        transition: background 0.1s ease;
       }
 
       .mono {
         font-family: var(--font-mono);
       }
 
+      /* Section label (shown on mobile / small screens) */
+      .section-label {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--text-strong);
+        margin-bottom: 1.5rem;
+      }
+
       :focus-visible {
         outline: 2px solid var(--accent);
         outline-offset: 3px;
-        border-radius: 4px;
+        border-radius: 3px;
       }
 
-      /* Scroll-reveal — only active when JS is present (progressive
-         enhancement) and motion is allowed. No-JS visitors see everything. */
+      /* Scroll reveal (progressive enhancement) */
       .js .reveal {
         opacity: 0;
-        transform: translateY(14px);
-        transition:
-          opacity 0.5s ease,
-          transform 0.5s ease;
+        transform: translateY(12px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
       }
-      .js .reveal.is-visible {
+      .js .reveal.in {
         opacity: 1;
         transform: none;
       }
-
       @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
         .js .reveal {
           opacity: 1;
           transform: none;
           transition: none;
         }
-        * {
-          animation-duration: 0.001ms !important;
-          animation-iteration-count: 1 !important;
-        }
       }
     </style>
+
+    <script>
+      // Cursor spotlight (skip on touch / reduced-motion)
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const fine = window.matchMedia("(pointer: fine)").matches;
+      if (fine && !reduce) {
+        let raf = 0;
+        let x = 0, y = 0;
+        window.addEventListener("pointermove", (e) => {
+          x = e.clientX;
+          y = e.clientY;
+          if (!raf)
+            raf = requestAnimationFrame(() => {
+              document.documentElement.style.setProperty("--mx", x + "px");
+              document.documentElement.style.setProperty("--my", y + "px");
+              raf = 0;
+            });
+        });
+      }
+
+      // Scroll reveal
+      const els = document.querySelectorAll<HTMLElement>(".reveal");
+      if (reduce || !("IntersectionObserver" in window)) {
+        els.forEach((el) => el.classList.add("in"));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((en) => {
+              if (en.isIntersecting) {
+                en.target.classList.add("in");
+                io.unobserve(en.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.08 },
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
   </body>
 </html>

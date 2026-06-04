@@ -5,60 +5,44 @@ import SectionHeading from "./SectionHeading.astro";
 
 <section id="skills">
   <div class="container">
-    <SectionHeading index="03" title="Skills & Tools" />
-    <div class="groups">
+    <SectionHeading title="Skills" />
+    <dl class="skills">
       {
         skills.map((group) => (
-          <div class="group reveal">
-            <h3 class="mono">{group.category}</h3>
-            <ul>
-              {group.items.map((item) => <li>{item}</li>)}
-            </ul>
+          <div class="group">
+            <dt>{group.category}</dt>
+            <dd>{group.items.join(", ")}</dd>
           </div>
         ))
       }
-    </div>
+    </dl>
   </div>
 </section>
 
 <style>
-  .groups {
+  .skills {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem 2.5rem;
+    gap: 1rem;
   }
-  .group h3 {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    margin-bottom: 1rem;
+  .group {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1.5rem;
+    align-items: baseline;
   }
-  .group ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    list-style: none;
+  dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--faint);
   }
-  .group li {
-    font-size: 0.88rem;
-    color: var(--text);
-    padding: 0.4rem 0.85rem;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--bg-card);
-    transition:
-      border-color 0.15s ease,
-      color 0.15s ease;
+  dd {
+    color: var(--muted);
+    font-size: 0.94rem;
   }
-  .group li:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  @media (max-width: 640px) {
-    .groups {
+  @media (max-width: 600px) {
+    .group {
       grid-template-columns: 1fr;
-      gap: 1.75rem;
+      gap: 0.3rem;
     }
   }
 </style>

@@ -37,6 +37,7 @@ export interface ExperienceItem {
   period: string;
   url?: string;
   highlights: string[];
+  tech?: string[];
 }
 
 export interface Project {
@@ -74,8 +75,8 @@ export interface Publication {
 export const profile: Profile = {
   name: "Silvio Pavanetto",
   role: "Software Engineer",
-  tagline: "Backend platforms, optimization engines & ML — built to run at scale.",
-  bio: "Software engineer with a passion for basketball, food and logic riddles. I care about system design, backend platforms and machine learning — currently bringing software and optimization to heavy industry at Duferco, end-to-end from the rolling mill to shipping.",
+  tagline: "Backend systems, optimization, and machine learning.",
+  bio: "Software engineer with a passion for basketball, food and logic riddles. I care about system design, backend platforms and machine learning — currently bringing software and optimization to heavy industry at Duferco.",
   location: "Lugano, Switzerland",
   email: "silvio.pavanetto@gmail.com",
   resumeUrl: "/cv.pdf",
@@ -89,9 +90,9 @@ export const profile: Profile = {
 // Headline metrics — real, verifiable numbers from the work below.
 // These do the heavy lifting: credibility through specifics, not adjectives.
 export const stats: Stat[] = [
-  { value: "15×", unit: "faster", label: "Core scheduler: 30 min → 2 min" },
+  { value: "15×", unit: "faster", label: "Core optimization: 30 min → 2 min" },
   { value: "1k", unit: "req / s", label: "Search API throughput on Elasticsearch" },
-  { value: "300k+", unit: "jobs / day", label: "Crawled and processed at scale" },
+  { value: "300k+", unit: "jobs / day", label: "Job postings crawled and processed daily" },
   { value: "95%", unit: "accuracy", label: "ML classifier serving ~1M jobs/day" },
 ];
 
@@ -102,11 +103,12 @@ export const experience: ExperienceItem[] = [
     location: "Lugano, Switzerland",
     period: "Mar 2025 — Present",
     highlights: [
-      "Define and own the backend engineering standards across Duferco Travi e Profilati (DTP) — observability, data modelling, authentication and software-engineering best practices shared across many services.",
-      "Re-architected the overnight optimization engine (the \"Verification Procedure\") behind the shipping flow of two steel plants, cutting its runtime from ~30 minutes to ~2 — a ~15× speedup.",
-      "Built pynno, a shared Python platform library powering the DTP backends: AWS (S3, Secrets Manager, SNS), AS/400 access, asyncpg PostgreSQL, Entra M2M auth and Logfire observability.",
-      "Bringing software end-to-end across the rolling-mill flow — from LLM-based order extraction (Claude / AWS Bedrock) to lamination scheduling and shipping — bridging legacy AS/400 (IBM DB2 for i) with modern FastAPI services on AWS.",
+      "Define and own the backend engineering standards across the platform — observability, data modelling, authentication and software-engineering best practices shared across many services.",
+      "Re-architected a core overnight optimization engine, cutting its runtime from ~30 minutes to ~2 — a ~15× speedup.",
+      "Built a shared Python platform library — cloud integration, database access, authentication and observability — adopted across the backend services.",
+      "Bringing software end-to-end across industrial operations: from LLM-based document extraction to scheduling and logistics, bridging legacy systems with modern cloud services.",
     ],
+    tech: ["Python", "FastAPI", "AWS", "PostgreSQL", "Logfire"],
   },
   {
     company: "Jobtome",
@@ -119,6 +121,7 @@ export const experience: ExperienceItem[] = [
       "Architected a job-offers crawler on GCP with 5,000+ crawlers collecting 300k+ jobs/day — Airflow, Kubernetes, Cloud Tasks, Cloud Run, Dataflow, BigQuery, Pub/Sub.",
       "Built and deployed an NLP/deep-learning classifier (BERT, CNN) on Vertex AI processing ~1M jobs/day at 95% accuracy.",
     ],
+    tech: ["Python", "GCP", "Elasticsearch", "Apache Beam", "Airflow", "Kubernetes"],
   },
   {
     company: "Polytechnic University of Milan",
@@ -129,6 +132,7 @@ export const experience: ExperienceItem[] = [
       "Monitored 3M Italian conversations about vaccines across social media to study the interplay between online discourse and vaccine hesitancy/uptake.",
       "Built a data pipeline ingesting and analysing hundreds of reviews and social posts per day from 100 Italian museums.",
     ],
+    tech: ["Python", "NLP", "Data pipelines"],
   },
   {
     company: "Deloitte Digital",
@@ -138,6 +142,7 @@ export const experience: ExperienceItem[] = [
     highlights: [
       "Developer on international cloud projects built on Salesforce technology, using Java and JavaScript.",
     ],
+    tech: ["Java", "JavaScript", "Salesforce"],
   },
 ];
 

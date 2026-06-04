@@ -1,125 +1,82 @@
 ---
 import { publications, education } from "../data/content";
-import SectionHeading from "./SectionHeading.astro";
 ---
 
-<section id="publications">
-  <div class="container">
-    <SectionHeading index="04" title="Writing & Education" />
+<section id="writing" class="section">
+  <h2 class="section-label">Writing</h2>
+  <ul class="list">
+    {
+      publications.map((pub) => {
+        const Tag = pub.url ? "a" : "div";
+        return (
+          <li class="item reveal">
+            <Tag
+              {...(pub.url
+                ? { href: pub.url, target: "_blank", rel: "noopener" }
+                : {})}
+              class:list={["row", { linked: !!pub.url }]}
+            >
+              <span class="meta mono">
+                {pub.venue} · {pub.year}
+              </span>
+              <h3>{pub.title}</h3>
+              <p class="desc">{pub.description}</p>
+            </Tag>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>
 
-    <div class="cols">
-      <div class="col">
-        <h3 class="col-label mono">Publications</h3>
-        <ul class="pubs">
-          {
-            publications.map((pub) => {
-              const Tag = pub.url ? "a" : "div";
-              return (
-                <li class="pub reveal">
-                  <Tag
-                    {...(pub.url
-                      ? { href: pub.url, target: "_blank", rel: "noopener" }
-                      : {})}
-                    class:list={["pub-inner", { linked: !!pub.url }]}
-                  >
-                    <span class="venue mono">{pub.venue}</span>
-                    <h4>{pub.title}</h4>
-                    <p>{pub.description}</p>
-                  </Tag>
-                </li>
-              );
-            })
-          }
-        </ul>
-      </div>
-
-      <div class="col">
-        <h3 class="col-label mono">Education</h3>
-        <ul class="edu">
-          {
-            education.map((e) => (
-              <li class="edu-item reveal">
-                <span class="period mono">{e.period}</span>
-                <h4>{e.degree}</h4>
-                <p class="inst">{e.institution}</p>
-                {e.detail && <p class="detail">{e.detail}</p>}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
-  </div>
+<section id="education" class="section">
+  <h2 class="section-label">Education</h2>
+  <ul class="list">
+    {
+      education.map((e) => (
+        <li class="item">
+          <span class="meta mono">{e.period}</span>
+          <h3>{e.degree}</h3>
+          <p class="desc">
+            {e.institution}
+            {e.detail ? ` — ${e.detail}` : ""}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
 </section>
 
 <style>
-  .cols {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 3rem;
-  }
-  .col-label {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    margin-bottom: 1.25rem;
-  }
-  .pubs,
-  .edu {
+  .list {
     list-style: none;
     display: grid;
     gap: 1.5rem;
   }
-  .pub-inner {
-    display: block;
-    border-radius: 12px;
-  }
-  .pub-inner.linked {
-    transition: opacity 0.15s ease;
-  }
-  .pub-inner.linked:hover {
-    opacity: 0.78;
-  }
-  .venue {
-    font-size: 0.75rem;
-    color: var(--text-faint);
+  .meta {
+    font-size: 0.66rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
+    color: var(--faint);
   }
-  h4 {
-    font-size: 1rem;
+  h3 {
+    font-size: 0.98rem;
     font-weight: 600;
+    color: var(--text-strong);
     line-height: 1.4;
-    margin-top: 0.35rem;
-    letter-spacing: -0.005em;
+    margin-top: 0.3rem;
+    letter-spacing: -0.01em;
   }
-  .pub p {
-    color: var(--text-muted);
+  .desc {
+    color: var(--muted);
     font-size: 0.9rem;
-    margin-top: 0.5rem;
-  }
-  .edu-item .period {
-    font-size: 0.78rem;
-    color: var(--text-faint);
-  }
-  .edu-item h4 {
     margin-top: 0.3rem;
   }
-  .inst {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    margin-top: 0.2rem;
+  .row.linked {
+    display: block;
+    transition: color 0.15s ease;
   }
-  .detail {
-    color: var(--accent);
-    font-size: 0.82rem;
-    margin-top: 0.35rem;
-  }
-  @media (max-width: 680px) {
-    .cols {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
+  .row.linked:hover h3 {
+    color: var(--accent-text);
   }
 </style>

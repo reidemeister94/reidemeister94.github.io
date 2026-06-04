@@ -1,0 +1,26 @@
+---
+import { profile } from "../data/content";
+---
+
+<section id="about" class="section">
+  <h2 class="section-label">About</h2>
+  <div class="prose reveal">
+    <p>{profile.bio}</p>
+    <p>
+      Most of my work lives in Python and the cloud — backend services, data
+      pipelines, and the occasional machine-learning model. I care about the
+      parts that don't demo well: clean data models, observability, and code the
+      next person can actually read.
+    </p>
+  </div>
+</section>
+
+<style>
+  .prose p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
+</style>
