@@ -1,0 +1,88 @@
+---
+import { experience } from "../data/content";
+import SectionHeading from "./SectionHeading.astro";
+---
+
+<section id="experience">
+  <div class="container">
+    <SectionHeading index="01" title="Experience" />
+    <ol class="timeline">
+      {
+        experience.map((job) => (
+          <li class="entry reveal">
+            <span class="period mono">{job.period}</span>
+            <div class="body">
+              <h3>
+                {job.role} · <span class="company">{job.company}</span>
+              </h3>
+              <p class="loc mono">{job.location}</p>
+              <ul class="highlights">
+                {job.highlights.map((h) => <li>{h}</li>)}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    list-style: none;
+  }
+  .entry {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 1.5rem;
+    padding-block: 1.75rem;
+    border-top: 1px solid var(--border);
+  }
+  .entry:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+  .period {
+    font-size: 0.8rem;
+    color: var(--text-faint);
+    padding-top: 0.2rem;
+    white-space: nowrap;
+  }
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .company {
+    color: var(--accent);
+  }
+  .loc {
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    margin-top: 0.2rem;
+  }
+  .highlights {
+    list-style: none;
+    margin-top: 0.9rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .highlights li {
+    position: relative;
+    padding-left: 1.1rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+  .highlights li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+  @media (max-width: 640px) {
+    .entry {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>

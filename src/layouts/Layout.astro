@@ -1,0 +1,207 @@
+---
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
+import { profile } from "../data/content";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${profile.name} — ${profile.role}`,
+  description = profile.bio,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={profile.name} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#08080a" />
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Set theme before paint to avoid a flash of the wrong theme -->
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        // Mark JS as available so scroll-reveal only hides content when it can
+        // actually be revealed — no-JS visitors see everything.
+        root.classList.add("js");
+        const stored = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        root.dataset.theme = stored ?? (prefersDark ? "dark" : "light");
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <slot />
+
+    <style is:global>
+      :root {
+        --max-width: 60rem;
+        --radius: 16px;
+        --font-sans:
+          "Geist Variable", ui-sans-serif, system-ui, -apple-system,
+          "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        --font-mono:
+          "Geist Mono Variable", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+          Consolas, monospace;
+        --accent: #7b6cff;
+        --accent-2: #22d3ee;
+        --gradient: linear-gradient(120deg, #7b6cff 0%, #22d3ee 100%);
+      }
+
+      html[data-theme="dark"] {
+        --bg: #08080a;
+        --bg-elev: #101014;
+        --bg-card: #0e0e12;
+        --text: #ededf0;
+        --text-muted: #8b8b96;
+        --text-faint: #56565f;
+        --border: #1d1d24;
+        --border-strong: #2b2b35;
+        --accent-soft: rgba(123, 108, 255, 0.12);
+        --glow: rgba(123, 108, 255, 0.22);
+        --grain-opacity: 0.035;
+      }
+
+      html[data-theme="light"] {
+        --bg: #fafafa;
+        --bg-elev: #ffffff;
+        --bg-card: #ffffff;
+        --text: #16161a;
+        --text-muted: #5b5b66;
+        --text-faint: #9a9aa4;
+        --border: #e7e7ec;
+        --border-strong: #d7d7de;
+        --accent-soft: rgba(123, 108, 255, 0.1);
+        --glow: rgba(123, 108, 255, 0.14);
+        --grain-opacity: 0.02;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 5rem;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-sans);
+        font-size: 16px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        overflow-x: hidden;
+        transition:
+          background 0.25s ease,
+          color 0.25s ease;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      /* Subtle film grain for depth/craft */
+      .grain {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: var(--grain-opacity);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      .container {
+        width: 100%;
+        max-width: var(--max-width);
+        margin-inline: auto;
+        padding-inline: 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      section {
+        padding-block: 4.5rem;
+        border-top: 1px solid var(--border);
+        position: relative;
+        z-index: 2;
+      }
+
+      .mono {
+        font-family: var(--font-mono);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      /* Scroll-reveal — only active when JS is present (progressive
+         enhancement) and motion is allowed. No-JS visitors see everything. */
+      .js .reveal {
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+      }
+      .js .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .js .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </body>
+</html>

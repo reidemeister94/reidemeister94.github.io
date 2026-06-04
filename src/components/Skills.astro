@@ -1,0 +1,64 @@
+---
+import { skills } from "../data/content";
+import SectionHeading from "./SectionHeading.astro";
+---
+
+<section id="skills">
+  <div class="container">
+    <SectionHeading index="03" title="Skills & Tools" />
+    <div class="groups">
+      {
+        skills.map((group) => (
+          <div class="group reveal">
+            <h3 class="mono">{group.category}</h3>
+            <ul>
+              {group.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .groups {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 2.5rem;
+  }
+  .group h3 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .group ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+  }
+  .group li {
+    font-size: 0.88rem;
+    color: var(--text);
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-card);
+    transition:
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+  .group li:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  @media (max-width: 640px) {
+    .groups {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+  }
+</style>
