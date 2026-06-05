@@ -29,22 +29,20 @@ npm run preview    # preview the production build
 
 ## Deploying
 
-The site is published with **"deploy from a branch"**: the source lives on `main`,
-the built site lives on the `gh-pages` branch, and GitHub Pages serves that branch.
-
-To (re)deploy after any change:
+Deployment is **automatic via GitHub Actions**: every push to `main` builds the
+site and publishes it to GitHub Pages. No manual step — just:
 
 ```bash
-npm run deploy
+git push
 ```
 
-That builds the site and force-pushes `dist/` to `gh-pages`. It authenticates with
-the personal GitHub token stored in the macOS Keychain as `gh-personal` (the same
-one `gh-p` uses) — no extra login needed.
+Watch the run under the repo's **Actions** tab, or trigger one by hand there with
+**Run workflow**. The pipeline lives in
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) and uses the official
+`withastro/action` (build) + `actions/deploy-pages` (publish).
 
-**One-time GitHub setting** (already configured at first publish):
-**Settings → Pages → Build and deployment → Source: Deploy from a branch →
-Branch: `gh-pages` / `(root)`**.
+**GitHub setting** (already configured): **Settings → Pages → Build and deployment
+→ Source: GitHub Actions**.
 
 > `public/.nojekyll` is intentionally included so Pages serves Astro's `_astro/`
 > asset folder (Jekyll would otherwise ignore underscore-prefixed paths).
