@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# personal per-project agent instructions (not shared)
+.claude/CLAUDE.md
+AGENTS.override.md
