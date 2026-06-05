@@ -29,7 +29,7 @@ Personal portfolio of Silvio Pavanetto — an Astro static site deployed to GitH
 
 - Node ≥ 22.12. Install with `npm install`; on an `EACCES` cache error run `npm install --cache /tmp/npm-cache` (local quirk, not CI).
 - Dev `npm run dev` (`http://localhost:4321`) · build `npm run build` → `./dist` · preview `npm run preview`.
-- Deploy `npm run deploy` — builds and force-pushes `dist/` to the `gh-pages` branch (Pages serves it), authenticating via the `gh-personal` Keychain token. Never hand-edit the `gh-pages` branch.
+- Deploy is automatic — pushing to `main` runs `.github/workflows/deploy.yml` (`withastro/action` build → `actions/deploy-pages`); Pages source is **GitHub Actions**, not a branch. No manual step beyond `git push`.
 - All editable content (bio, stats, experience, projects, skills, publications, education) lives in `src/data/content.ts` — change content there, never in component markup.
 - Replace the CV by overwriting `public/cv.pdf` (keep the filename). Keep `public/.nojekyll` so Pages serves `_astro/`.
 - No automated test suite exists; verify changes with `npm run build` (type-checks under `astro/tsconfigs/strict`) plus manual review in `npm run dev`.
