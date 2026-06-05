@@ -1,0 +1,42 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Deploy automatico ad ogni push su main
+  push:
+    branches: [main]
+  # Consente anche il deploy manuale dalla tab "Actions"
+  workflow_dispatch:
+
+# Permessi minimi richiesti per il deploy su GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un solo deploy alla volta; non annullare quelli già in corso
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build del sito Astro
+        # Esegue install + build e carica l'artefatto per GitHub Pages
+        uses: withastro/action@v3
+        with:
+          node-version: 22
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy su GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
