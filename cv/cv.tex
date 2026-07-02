@@ -1,0 +1,157 @@
+%-------------------------
+% Resume in Latex
+% Author : Silvio Pavanetto
+% License : MIT
+%------------------------
+
+\documentclass[hidelinks,letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\definecolor{niceblue}{RGB}{69, 123, 157}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.375in}
+\addtolength{\evensidemargin}{-0.375in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item\small{
+    \textbf{#1}{: #2 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+\renewcommand{\labelitemii}{$\circ$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING-----------------
+\begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+  \textbf{\href{https://reidemeister94.github.io/}{\Large Silvio Pavanetto}} & Email : \href{mailto:silvio.pavanetto@gmail.com}{\textbf{\textcolor{niceblue}{silvio.pavanetto@gmail.com}}}\\
+  \href{https://reidemeister94.github.io/}{\textbf{\textcolor{niceblue}{reidemeister94.github.io}}} & Github : \href{https://github.com/reidemeister94}{\textbf{\textcolor{niceblue}{github.com/reidemeister94}}}\\
+\end{tabular*}
+
+
+%-----------EXPERIENCE-----------------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Duferco}{Lugano, Switzerland}
+      {Software Engineer}{03/2025 - Present}
+      \resumeItemListStart
+        \item[] Defined the \textbf{company-wide backend standards} (auth, observability, data modeling) and shipped them as a shared \textbf{Python} platform library and reusable \textbf{CI/CD} pipelines adopted across services.
+
+        \item[] Deliver and maintain \textbf{8+ production FastAPI/Python services} to the same engineering bar --- layered architecture, typed \textbf{Pydantic} contracts, full observability, and comprehensive \textbf{test suites} (hundreds of tests per service).
+
+        \item[] Cut a core \textbf{scheduling/optimization batch} from \textbf{30 to 2 minutes (15x)} by reworking the hot path, cutting the heaviest query latency \textbf{96\%}, and parallelizing I/O.
+
+        \item[] Designed a middleware bridging cloud services to a legacy \textbf{AS/400} (IBM DB2 for i) ERP over HTTP --- \textbf{Apache Arrow} streaming and atomic batch transactions --- removing client-side DB drivers across services.
+
+        \item[] Built and maintained the team's \textbf{AI-agent development platform} --- a private plugin/skill \textbf{marketplace} (Claude Code and Codex) plus agentic workflows that auto-open \textbf{PRs} to keep a cross-service knowledge base current --- standardizing AI-driven development across projects.
+
+        \item[] Built an \textbf{LLM} document-extraction service (\textbf{Claude} on AWS Bedrock) converting business documents into validated structured data.
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Jobtome}{Stabio, Switzerland}
+      {Software Engineer}{11/2021 - 02/2025}
+      \resumeItemListStart
+        \item[] Built \textbf{search APIs} in \textbf{Python} over \textbf{Elasticsearch}, sustaining \textbf{1,000 requests/second}.
+
+        \item[] Architected a \textbf{Python} job-crawler platform on \textbf{GCP} --- \textbf{5,000+ crawlers}, \textbf{300k+ jobs/day} --- plus \textbf{Apache Beam} pipelines ingesting \textbf{millions of records/day} (Pub/Sub to BigQuery).
+
+        \item[] Built and deployed an \textbf{NLP} classifier (\textbf{BERT, CNN}) on \textbf{Vertex AI}, processing \textbf{about 1M jobs/day at 95\% accuracy}.
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Polytechnic University of Milan}{Milan, Italy}
+      {Research Fellow}{10/2019 - 10/2021}
+      \resumeItemListStart
+        \item[] Built \textbf{NLP} data pipelines analyzing \textbf{3M+ Italian social-media conversations} on vaccine discourse, and insights from reviews across \textbf{100 museums}.
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+
+%--------SKILLS------------
+\section{Skills}
+ \resumeSubHeadingListStart
+   \item{
+     \textbf{Languages:} Python, SQL \\
+     \textbf{Backend:} FastAPI, Pydantic, asyncpg, PostgreSQL, REST, OAuth2/JWT \\
+     \textbf{Data \& ML:} Pandas, NumPy, PyTorch, BERT/Transformers, LLMs (Claude, AWS Bedrock), Apache Beam, BigQuery \\
+     \textbf{Cloud \& Infra:} AWS, GCP, Docker, Kubernetes, OpenTelemetry, CI/CD, distributed systems
+   }
+ \resumeSubHeadingListEnd
+
+%-----------EDUCATION-----------------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Polytechnic University of Milan}{Milan, Italy}
+      {M.Sc. in Computer Science and Engineering; Final grade: 110 with honors/110}{09/2016 -- 04/2019}
+    \resumeSubheading
+      {Polytechnic University of Milan}{Milan, Italy}
+      {Bachelor Engineering of Computing Systems}{09/2013 -- 09/2016}
+  \resumeSubHeadingListEnd
+
+%-----------PUBLICATIONS-----------------
+\section{Selected Publications}
+  \resumeSubHeadingListStart
+    \resumeSubItem
+    {Pavanetto, Brambilla}{\href{https://doi.org/10.1007/978-3-030-50578-3_17}{\textit{Generating Realistic Web-Navigation Paths with RNNs and GANs.} ICWE 2020.}}
+    \resumeSubItem
+    {Di Giovanni, Pavanetto, et al.}{\href{https://re.public.polimi.it/retrieve/handle/11311/1198722/694532/2021_52.pdf}{\textit{Content-based Classification of Vaccine-related Stances on Twitter (Italian).} ICWSM 2021.}}
+  \resumeSubHeadingListEnd
+%-------------------------------------------
+\end{document}
