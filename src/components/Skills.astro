@@ -1,43 +1,42 @@
 ---
 import { skills } from "../data/content";
-import SectionHeading from "./SectionHeading.astro";
 ---
 
-<section id="skills">
-  <div class="container">
-    <SectionHeading title="Skills" />
-    <dl class="skills">
-      {
-        skills.map((group) => (
-          <div class="group">
-            <dt>{group.category}</dt>
-            <dd>{group.items.join(", ")}</dd>
-          </div>
-        ))
-      }
-    </dl>
-  </div>
+<section id="skills" class="section">
+  <h2 class="section-label">Skills</h2>
+  <dl class="skills">
+    {
+      skills.map((group) => (
+        <div class="group reveal">
+          <dt class="meta mono">{group.category}</dt>
+          <dd class="items">{group.items.join(", ")}</dd>
+        </div>
+      ))
+    }
+  </dl>
 </section>
 
 <style>
   .skills {
     display: grid;
-    gap: 1rem;
+    gap: 1.25rem;
   }
   .group {
     display: grid;
-    grid-template-columns: 7.5rem 1fr;
+    grid-template-columns: 9rem 1fr;
     gap: 1.5rem;
     align-items: baseline;
   }
-  dt {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+  .meta {
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: var(--faint);
   }
-  dd {
+  .items {
     color: var(--muted);
-    font-size: 0.94rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
   @media (max-width: 600px) {
     .group {

@@ -106,6 +106,7 @@ export const experience: ExperienceItem[] = [
       "Define and own the backend engineering standards across the platform — observability, data modelling, authentication and software-engineering best practices shared across many services.",
       "Re-architected a core overnight optimization engine, cutting its runtime from ~30 minutes to ~2 — a ~15× speedup.",
       "Built a shared Python platform library — cloud integration, database access, authentication and observability — adopted across the backend services.",
+      "Built and maintain the team's AI-driven development platform — a shared marketplace of coding-agent plugins and skills, plus agentic workflows that open pull requests to keep cross-service knowledge and documentation in sync.",
       "Bringing software end-to-end across industrial operations: from LLM-based document extraction to scheduling and logistics, bridging legacy systems with modern cloud services.",
     ],
     tech: ["Python", "FastAPI", "AWS", "PostgreSQL", "Logfire"],
@@ -181,19 +182,19 @@ export const projects: Project[] = [
 export const skills: SkillGroup[] = [
   {
     category: "Languages",
-    items: ["Python", "Java", "JavaScript", "C++"],
+    items: ["Python", "Java", "C++", "SQL"],
   },
   {
     category: "Cloud & Infrastructure",
-    items: ["Google Cloud Platform", "Docker", "Kubernetes", "Airflow", "Git", "CI/CD"],
+    items: ["AWS", "Google Cloud Platform", "Docker", "Kubernetes", "Airflow", "Git", "CI/CD"],
   },
   {
     category: "Backend & Data",
-    items: ["FastAPI", "Elasticsearch", "Pandas", "NumPy", "Microservices", "Distributed systems"],
+    items: ["FastAPI", "PostgreSQL", "Elasticsearch", "Pandas", "NumPy", "Microservices", "Distributed systems"],
   },
   {
     category: "Machine Learning",
-    items: ["TensorFlow", "Scikit-Learn", "NLP", "Deep learning"],
+    items: ["PyTorch", "Scikit-Learn", "NLP", "Deep learning", "LLMs"],
   },
 ];
 
